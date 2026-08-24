@@ -27,7 +27,11 @@ O dataset contem links para uma API com diversos dados de um Pokemon e o objetiv
   
   4 - Lambda_2 (Envia_dados_fila) para ler o arquivo JSON e enfileirá-lo em um serviço SQS. Neste serviço foram criadas políticas para permissão de leitura e escrita através das funções GetObject e PutObject. O gatilho deste serviço é qualquer alteração no arquivo JSON.
   
-  5 - Lambda_3 (Escreve_Banco_Dados) para escrever os dados da fila SQS em um serviço RDS com banco de dados MariaDB. Para este serviço foram criadas variáveis de ambiente com os dados de acesso ao banco de dados. Neste serviço foi criada uma política para diversas permissões necessárias para conexão com o banco de dados e uma camada lambda com um contêiner que roda a biblioteca do conector python "pymsql" para acesso ao MariaDB.
+  5 - Lambda_3 (Escreve_Banco_Dados) para escrever os dados da fila SQS em um serviço RDS com banco de dados MariaDB. Para este serviço foram criadas variáveis de ambiente com os dados de acesso ao banco de dados. Neste serviço foi criada uma política para diversas permissões necessárias para conexão com o banco de dados e uma camada lambda com um contêiner que roda a biblioteca do conector python "pymsql" para acesso ao MariaDB. O gatilho configurado é o envio de novos dados pelo serviço SQS.
   
   6 - O software DBeaver foi instalado e utilizado como client DB para acesso à tabela criada com os dados estruturados. O arquivo "processed_sqs_data_202608232154.sql" foi exportado com os dados da tabela, porém, somente o nome dos pokemons foi armazenado por alguma falha não encontrada no código.
-  
+
+  7 - Cálculo do custo:
+  O arquivo urls.txt tem apenas 46 KB e o JSON tem 177 KB. A estimativa de preço para um ano com as condições especificadas é:
+  <img width="1109" height="606" alt="image" src="https://github.com/user-attachments/assets/baa63d57-672e-43b3-911e-764afb75d33f" />
+
