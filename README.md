@@ -19,13 +19,13 @@ O dataset contem links para uma API com diversos dados de um Pokemon e o objetiv
   Os dados acima foram estruturados em um arquivo JSON, enviados para uma fila e depois armazenados em um banco de dados.
   Conforme a arquitetura apresentada, o ETL foi realizado na seguinte ordem:
   
-  1 - Bucket S3 "dataset"  para armazenar os dados brutos (arquivo urls.txt)
+  1 - Bucket S3 "dataset"  para armazenar os dados brutos (arquivo urls.txt). Esse arquivo deve ser lido uma vez ao dia.
   
-  2 - Lambda_1 (extrair_dados_pokemon_dataset) com código python para iterar sobre cada url, buscar os dados solicitados e inseri-   los de forma estruturada em um arquivo JSON. Para este lambda foi necessário desenvolver uma camada (lambda_layer_1) que roda        um contêiner python com a biblioteca "requests" que não é nativa do serviço AWS Lambda. O gatilho configurado para este Lambda é qualquer alteração no objeto do Bucket dataset. Neste serviço foram criadas políticas para permissão de leitura e escrita através das funções GetObject e PutObject.
+  2 - Lambda_1 (extrair_dados_pokemon_dataset) com código python para iterar sobre cada url, buscar os dados solicitados e inseri- los de forma estruturada em um arquivo JSON. Para este lambda foi necessário desenvolver uma camada (lambda_layer_1) que roda    um contêiner python com a biblioteca "requests" que não é nativa do serviço AWS Lambda. O gatilho configurado para este Lambda é qualquer alteração no objeto do Bucket dataset. Neste serviço foram criadas políticas para permissão de leitura e escrita através das funções GetObject e PutObject.
   
   3 - Bucket S3 "dados_selecionados" que armazena o arquivo JSON criado pelo serviço lambda do item 2.
   
-  4 - Lambda_2 (Envia_dados_fila) para ler o arquivo JSON e enfileirá-lo em um serviço SQS. Neste serviço foram criadas políticas para permissão de leitura e escrita através das funções GetObject e PutObject.
+  4 - Lambda_2 (Envia_dados_fila) para ler o arquivo JSON e enfileirá-lo em um serviço SQS. Neste serviço foram criadas políticas para permissão de leitura e escrita através das funções GetObject e PutObject. O gatilho deste serviço é qualquer alteração no arquivo JSON.
   
   5 - Lambda_3 (Escreve_Banco_Dados) para escrever os dados da fila SQS em um serviço RDS com banco de dados MariaDB. Para este serviço foram criadas variáveis de ambiente com os dados de acesso ao banco de dados. Neste serviço foi criada uma política para diversas permissões necessárias para conexão com o banco de dados e uma camada lambda com um contêiner que roda a biblioteca do conector python "pymsql" para acesso ao MariaDB.
   
