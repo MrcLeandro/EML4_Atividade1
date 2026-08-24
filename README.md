@@ -6,6 +6,7 @@ Trabalho realizado pelos alunos:
 - Rudi Modena
 
 ETL realizado na AWS com a seguinte arquitetura:
+
 <img width="902" height="576" alt="image" src="https://github.com/user-attachments/assets/62437352-cf41-4b37-b959-4e236bc7fbc2" />
 
 O dataset contem links para uma API com diversos dados de um Pokemon e o objetivo é iterar sobre cada link e extrair os seguintes dados:
@@ -33,5 +34,6 @@ O dataset contem links para uma API com diversos dados de um Pokemon e o objetiv
 
   7 - Cálculo do custo:
   O arquivo urls.txt tem apenas 46 KB e o JSON tem 177 KB. A estimativa de preço para um ano com as condições especificadas é:
+  
   <img width="1109" height="606" alt="image" src="https://github.com/user-attachments/assets/baa63d57-672e-43b3-911e-764afb75d33f" />
 
